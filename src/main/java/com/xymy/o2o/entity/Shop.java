@@ -1,7 +1,7 @@
 package com.xymy.o2o.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *  店铺实体类
