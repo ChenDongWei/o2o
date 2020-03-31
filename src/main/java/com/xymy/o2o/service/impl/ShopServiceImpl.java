@@ -46,11 +46,14 @@ public class ShopServiceImpl implements ShopService {
 					//存储图片
 					try {
 						addShopImg(shop, shopImg);
+						//更新店铺的图片地址
+						effectedNum = shopDao.updateShop(shop);
+						if (effectedNum <= 0) {
+							throw new RuntimeException("创建图片地址失败");
+						}
 					} catch (Exception e) {
 						throw new ShopOperationException("addShopImg error:" + e.getMessage());
 					}
-					//更新店铺的图片地址
-					effectedNum = shopDao.updateShop(shop);
 					if (effectedNum <= 0) {
 						throw new ShopOperationException("更新图片地址失败");
 					}

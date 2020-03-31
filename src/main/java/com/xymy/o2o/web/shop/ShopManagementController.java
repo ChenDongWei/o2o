@@ -26,6 +26,7 @@ import com.xymy.o2o.enuma.ShopStateEnum;
 import com.xymy.o2o.service.AreaService;
 import com.xymy.o2o.service.ShopCategoryService;
 import com.xymy.o2o.service.ShopService;
+import com.xymy.o2o.util.CodeUtil;
 import com.xymy.o2o.util.HttpServletRequestUtil;
 
 
@@ -62,6 +63,11 @@ public class ShopManagementController {
 	@ResponseBody
 	public Map<String, Object> registerShop(HttpServletRequest request){
 		Map<String, Object> modelMap = new HashMap<String, Object>();
+		if (!CodeUtil.checkVerifyCode(request)) {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "输入的验证码错误");
+			return modelMap;
+		}
 		//1、接收并转化相应的参数，包括店铺信息以及图片信息
 		String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
 		ObjectMapper mapper = new ObjectMapper();
@@ -88,7 +94,7 @@ public class ShopManagementController {
 		if (shop != null && shopImg != null) {
 			PersonInfo owner = new PersonInfo();
 			//TODO session
-			owner.setUserId(1L);
+			owner.setUserId(8L);
 			shop.setOwner(owner);
 			ShopExecution se = shopService.addShop(shop, shopImg);
 			if (se.getState() == ShopStateEnum.CHECK.getState()) {

@@ -23,6 +23,10 @@ public class Shop implements Serializable {
 	
 	private String shopImg;
 	
+	private Double longitude;
+	
+	private Double latitude;
+	
 	private Integer priority;
 	
 	private Date createTime;
@@ -38,6 +42,8 @@ public class Shop implements Serializable {
 	private PersonInfo owner;
 	
 	private ShopCategory shopCategory;
+	
+	private ShopCategory parentCategory;
 
 	public Long getShopId() {
 		return shopId;
@@ -149,6 +155,30 @@ public class Shop implements Serializable {
 
 	public void setShopCategory(ShopCategory shopCategory) {
 		this.shopCategory = shopCategory;
+	}
+
+	public ShopCategory getParentCategory() {
+		return parentCategory;
+	}
+
+	public void setParentCategory(ShopCategory parentCategory) {
+		this.parentCategory = parentCategory;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
 	}
 
 }
