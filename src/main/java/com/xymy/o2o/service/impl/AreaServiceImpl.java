@@ -10,7 +10,7 @@ import com.xymy.o2o.entity.Area;
 import com.xymy.o2o.service.AreaService;
 
 /**
- * AreaService:区域service接口
+ * AreaServiceImpl:区域service接口
  * @author ChenDongWei
  * @date 2020年3月13日下午5:22:04
  */

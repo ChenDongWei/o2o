@@ -4,8 +4,8 @@ $(function() {
 
 	var isEdit = shopId ? true : false;
 
-	var shopInfoUrl = '/o2o/shop/getshopbyid?shopId=1';
-	// var shopInfoUrl = '/o2o/shop/getshopbyid?shopId=' + shopId;
+	// var shopInfoUrl = '/o2o/shop/getshopbyid?shopId=1';
+	var shopInfoUrl = '/o2o/shop/getshopbyid?shopId=' + shopId;
 	var initUrl = '/o2o/shop/getshopinitinfo';
 	var editShopUrl = '/o2o/shop/registershop';
 	if (isEdit) {
@@ -31,7 +31,7 @@ $(function() {
 				$('#shop-category').html(shopCategory);
 				$('#shop-category').attr('disabled','disabled');
 				$('#area').html(tempAreaHtml);
-				$('#area').attr('data-id',shop.areaId);
+				$("#area option[data-id='" + shop.area.areaId + "']").attr("selected","selected");
 			}
 		});
 	}
@@ -64,7 +64,9 @@ $(function() {
 
 	$('#submit').click(function() {
 		var shop = {};
-
+		if(isEdit){
+			shop.shopId = shopId;
+		}
 		shop.shopName = $('#shop-name').val();
 		shop.shopAddr = $('#shop-addr').val();
 		shop.phone = $('#shop-phone').val();

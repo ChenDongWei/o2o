@@ -9,6 +9,15 @@ import com.xymy.o2o.entity.Shop;
  */
 public interface ShopDao {
 	/**
+	 * @Title queryByShopId:(通过shopId查询店铺信息). 
+	 * @author ChenDongWei
+	 * @date 2020年3月31日下午4:53:47
+	 * @param shopId
+	 * @return
+	 */
+	Shop queryByShopId(long shopId);
+	
+	/**
 	 * @Title: insertShop:(新增店铺). 
 	 * @author ChenDongWei
 	 * @date 2020年3月20日下午2:48:38
