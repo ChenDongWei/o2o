@@ -17,9 +17,13 @@ public class ProductCategory implements Serializable {
 	
 	private String productCategoryName;
 	
+	private String productCategoryDesc;
+	
 	private Integer priority;
 	
 	private Date createTime;
+	
+	private Double lastEditTime;
 
 	public Long getProductCategoryId() {
 		return productCategoryId;
@@ -59,6 +63,22 @@ public class ProductCategory implements Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getProductCategoryDesc() {
+		return productCategoryDesc;
+	}
+
+	public void setProductCategoryDesc(String productCategoryDesc) {
+		this.productCategoryDesc = productCategoryDesc;
+	}
+
+	public Double getLastEditTime() {
+		return lastEditTime;
+	}
+
+	public void setLastEditTime(Double lastEditTime) {
+		this.lastEditTime = lastEditTime;
 	}
 	
 }

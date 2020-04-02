@@ -42,13 +42,81 @@ public class ShopManagementController {
 	private AreaService areaService;
 	
 	/**
+	 * @Title getShopManagementInfo:(管理店铺session相关操作). 
+	 * @author ChenDongWei
+	 * @date 2020年4月1日下午6:14:37
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="getShopManagementInfo", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getShopManagementInfo(HttpServletRequest request){
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		long shopId = HttpServletRequestUtil.getLong(request, "shopId");
+		if (shopId <= 0) {
+			Object currentShopObj = request.getSession().getAttribute("currentShop");
+			if (currentShopObj == null) {
+				modelMap.put("redirect", true);
+				modelMap.put("url", "/o2o/shop/shoplist");
+			}else {
+				Shop currentShop = (Shop) currentShopObj;
+				modelMap.put("redirect", false);
+				modelMap.put("shopId", currentShop.getShopId());
+			}
+		}else {
+			Shop currentShop = new Shop();
+			currentShop.setShopId(shopId);
+			request.getSession().setAttribute("currentShop", currentShop);
+			modelMap.put("redirect", false);
+		}
+		return modelMap;
+	}
+	
+	/**
+	 * @Title getShopList:(获取店铺列表数据). 
+	 * @author ChenDongWei
+	 * @date 2020年4月1日下午6:06:15
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getshoplist", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getShopList(HttpServletRequest request){
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		PersonInfo user = new PersonInfo();
+		user.setUserId(8L);
+		user.setName("张三");
+		request.getSession().setAttribute("user", user);
+		user = (PersonInfo) request.getSession()
+				.getAttribute("user");
+		List<Shop> list = new ArrayList<Shop>();
+		try {
+			Shop shopCondition = new Shop();
+			shopCondition.setOwner(user);
+			ShopExecution shopExecution = shopService
+					.getByEmployeeId(user.getUserId());
+			list = shopExecution.getShopList();
+			modelMap.put("shopList", list);
+			modelMap.put("user", user);
+			modelMap.put("success", true);
+			// 列出店铺成功之后，将店铺放入session中作为权限验证依据，即该帐号只能操作它自己的店铺
+			request.getSession().setAttribute("shopList", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("success", false);
+			modelMap.put("errMsg", e.toString());
+		}
+		return modelMap;
+	}
+	
+	/**
 	 * @Title getShopById:(根据店铺Id获取店铺信息). 
 	 * @author ChenDongWei
 	 * @date 2020年4月1日上午11:26:17
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="getshopbyid", method=RequestMethod.GET)
+	@RequestMapping(value="/getshopbyid", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> getShopById(HttpServletRequest request){
 		Map<String, Object> modelMap = new HashMap<String, Object>();

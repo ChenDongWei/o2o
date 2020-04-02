@@ -1,6 +1,7 @@
 package com.xymy.o2o.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import com.xymy.o2o.exceptions.ShopOperationException;
 import com.xymy.o2o.service.ShopService;
 import com.xymy.o2o.util.FileUtil;
 import com.xymy.o2o.util.ImageUtil;
+import com.xymy.o2o.util.PageCalculator;
 
 /**
  * ShopServiceImpl:店铺service接口
@@ -25,6 +27,48 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Autowired
 	private ShopDao shopDao;
+	
+	/**
+	 * @Title getShopList:(根据shopCondition分页返回相应店铺列表数据). 
+	 * @author ChenDongWei
+	 * @date 2020年4月1日下午4:00:31
+	 * @param shopCondition
+	 * @param pageIndex
+	 * @param pageSizs
+	 * @return
+	 */
+	@Override
+	public ShopExecution getShopList(Shop shopCondition, int pageIndex, int pageSize) {
+		int rowIndex = PageCalculator.calculateRowIndex(pageIndex, pageSize);
+		List<Shop> shopList = shopDao.queryShopList(shopCondition, rowIndex,
+				pageSize);
+		int count = shopDao.queryShopCount(shopCondition);
+		ShopExecution se = new ShopExecution();
+		if (shopList != null) {
+			se.setShopList(shopList);
+			se.setCount(count);
+		} else {
+			se.setState(ShopStateEnum.INNER_ERROR.getState());
+		}
+		return se;
+	}
+	
+	/**
+	 * @Title getByEmployeeId:(根据用户id获取用户店铺). 
+	 * @author ChenDongWei
+	 * @date 2020年4月1日下午5:18:25
+	 * @param employeeId
+	 * @return
+	 * @throws RuntimeException
+	 */
+	@Override
+	public ShopExecution getByEmployeeId(long employeeId)
+			throws RuntimeException {
+		List<Shop> shopList = shopDao.queryByEmployeeId(employeeId);
+		ShopExecution se = new ShopExecution();
+		se.setShopList(shopList);
+		return se;
+	}
 	
 	/**
 	 * @Title addShop:(添加店铺). 
