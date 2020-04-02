@@ -1,7 +1,6 @@
 $(function() {
-	//var shopId = 1;
 	var listUrl = '/o2o/shop/getproductcategorylist';
-	var addUrl = '/o2o/shop/addproductcategorys';
+	var addUrl = '/o2o/shop/addproductcategorylist';
 	var deleteUrl = '/o2o/shop/removeproductcategory';
 
 	$.getJSON(
@@ -98,13 +97,12 @@ $(function() {
 	$('.category-wrap').on('click', '.row-product-category.now .delete',
 			function(e) {
 				var target = e.currentTarget;
-				$.confirm('确定么?', function() {
+				$.confirm('确定删除吗？', function() {
 					$.ajax({
 						url : deleteUrl,
 						type : 'POST',
 						data : {
-							productCategoryId : target.dataset.id,
-							shopId : shopId
+							productCategoryId : target.dataset.id
 						},
 						dataType : 'json',
 						success : function(data) {

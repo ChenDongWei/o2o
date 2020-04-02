@@ -18,13 +18,13 @@ public class ProductCategoryExecution {
 	public ProductCategoryExecution() {
 	}
 
-	// 预约失败的构造器
+	// 操作失败使用的构造器
 	public ProductCategoryExecution(ProductCategoryStateEnum stateEnum) {
 		this.state = stateEnum.getState();
 		this.stateInfo = stateEnum.getStateInfo();
 	}
 
-	// 预约成功的构造器
+	// 操作成功使用的构造器
 	public ProductCategoryExecution(ProductCategoryStateEnum stateEnum,
 			List<ProductCategory> productCategoryList) {
 		this.state = stateEnum.getState();
